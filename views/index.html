@@ -1,0 +1,41 @@
+<%- include ./include/header.html%>
+<%articles.forEach(function(article){%>
+<div class="media">
+    <div class="media-left">
+        <a href="#">
+            <img class="media-object avatar" src="<%=article.user.avatar%>" alt="<%=article.user.username%>">
+        </a>
+    </div>
+    <div class="media-body">
+        <h4 class="media-heading">
+            <a href="/article/detail/<%=article._id%>"><%=article.title%></a>
+        </h4>
+        <p><%=article.content.length>50?article.content.slice(0,50)+'…………':article.content%></p>
+        <p>作者:<%=article.user.username%>|发表时间<%=article.createAt.toLocaleString()%></p>
+    </div>
+</div>
+<%})%>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <%if(pageNum>1){%>
+        <li>
+            <a href="/?pageNum=<%=pageNum-1%>&pageSize=<%=pageSize%>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <%}%>
+        <%
+        for(let i=1;i<=totalPages;i++){%>
+        <li class="<%=i==pageNum?'active':''%>"><a href="/?pageNum=<%=i%>&pageSize=<%=pageSize%>"><%=i%></a></li>
+        <%}
+        %>
+        <%if(pageNum<totalPages){%>
+        <li>
+            <a href="/?pageNum=<%=pageNum+1%>&pageSize=<%=pageSize%>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        <%}%>
+    </ul>
+</nav>
+<%- include ./include/footer.html%>
